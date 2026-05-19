@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Aavahana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- SCRIMS -->
+<div id="s-top"    class="scrim"></div>
+<div id="s-bot"    class="scrim"></div>
+<div id="s-left"   class="scrim"></div>
+<div id="s-right"  class="scrim"></div>
+
+<!-- HEADER -->
+<header class="hdr">
+  <span class="brand">AAVAHANA</span>
+  <div class="avatar"><i class="fa-regular fa-circle-user"></i></div>
+</header>
+
+<!-- TOUR BANNER -->
+<div id="tour-banner">
+  <div class="tb-left">
+    <div class="tb-icon"><i class="fa-solid fa-compass"></i></div>
+    <span class="tb-copy">First time? Take the guided tour</span>
+  </div>
+  <div class="tb-btns">
+    <button class="btn-start" onclick="startTour()">Start Tour</button>
+    <button class="btn-skip-tb" onclick="hideBanner()">Skip</button>
+  </div>
+</div>
+
+<!-- GREETING -->
+<div class="gbar">
+  <div>
+    <div class="g-label" id="g-label">Good morning,</div>
+    <div class="g-name">Rajan</div>
+  </div>
+  <div>
+    <div class="d-num" id="d-num">12</div>
+    <div class="d-lbl" id="d-lbl">May, Monday</div>
+  </div>
+</div>
+
+<!-- MAIN SCROLL -->
+<div class="scroll">
+
+  <!-- TODAY'S PLAN -->
+  <div class="card" id="plan-card">
+    <div class="ch">
+      <span class="ct">Today's Plan</span>
+      <span class="cbadge hidden" id="task-badge"></span>
+    </div>
+    <div class="cb">
+
+      <!-- EMPTY -->
+      <div id="v-empty">
+        <div class="empty">
+          <p class="empty-lbl">No plans yet - tap + to begin</p>
+          <button class="add-big" id="add-btn" onclick="openSel()" aria-label="Add task">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- SELECTION -->
+      <div id="v-sel" class="hidden">
+        <div class="sel-head">
+          <p class="sel-lbl">Tasks from your supervisor</p>
+          <button class="sel-back" onclick="closeSel()" aria-label="Back to tasks"><i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+        <div id="opt-list"></div>
+        <div id="v-slider" class="hidden">
+          <div class="sconf" id="sconf">
+            <div class="sfill" id="sfill"></div>
+            <div class="slbl">Slide to confirm plan</div>
+            <button class="sthumb" id="sthumb"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVE -->
+      <div id="v-active" class="hidden">
+        <div id="active-list"></div>
+        <button class="add-more" onclick="openSel()">
+          <i class="fa-solid fa-plus" style="margin-right:6px"></i>Add more tasks
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TODAY'S NOTE -->
+  <div class="card" id="note-card">
+    <div class="ch"><span class="ct">Today's Note</span></div>
+    <div class="cb">
+      <textarea class="narea" id="daily-note" rows="4" placeholder="Write about what you worked on today, any blockers, or anything worth remembering..."></textarea>
+      <div class="submit-row">
+        <button class="bsub" onclick="doSubmit('daily')">Submit Note</button>
+      </div>
+      <div class="saved-notes" id="daily-saved-notes"></div>
+    </div>
+  </div>
+
+  <!-- ANALYTICS -->
+  <div class="card" id="analytics-card">
+    <div class="ch"><span class="ct">Analytics</span></div>
+    <div class="cb">
+      <div class="chart-tabs" id="chart-tabs">
+        <button class="chart-tab active" id="tab-week" onclick="switchTab('week')">This Week</button>
+        <button class="chart-tab" id="tab-weeks" onclick="switchTab('weeks')">Weekly Trend</button>
+      </div>
+      <div id="chart-empty" class="wempty hidden">
+        <i class="fa-regular fa-chart-bar" style="font-size:20px;margin-bottom:8px;display:block;opacity:.35"></i>
+        Complete tasks to see your progress chart.
+      </div>
+      <div class="chart-wrap" id="chart-wrap">
+        <canvas id="analytics-chart"></canvas>
+      </div>
+      <div class="chart-legend" id="chart-legend"></div>
+    </div>
+  </div>
+
+  <!-- WEEKLY REPORT -->
+  <div class="card" id="report-card">
+    <div class="ch"><span class="ct">Weekly Report</span></div>
+    <div class="cb">
+      <div id="w-empty" class="wempty">
+        <i class="fa-regular fa-chart-bar" style="font-size:20px;margin-bottom:8px;display:block;opacity:.35"></i>
+        Complete tasks to build your weekly record.
+      </div>
+      <div id="w-summary" class="hidden wsummary">
+        <div class="wpct" id="w-pct">0%</div>
+        <div class="wnarr" id="w-narr"></div>
+      </div>
+      <div id="w-feed"></div>
+      <div class="wn-section" id="weekly-note-section">
+        <div class="wn-note-head">
+          <span class="wn-title">Weekly Note <span class="wn-optional">optional</span></span>
+        </div>
+        <p class="wn-hint">Here is an optional weekly note for adding context to the weekly report.</p>
+        <button class="wn-add" id="wn-btn" onclick="showWeeklyNote()">
+          <i class="fa-solid fa-plus-circle"></i> Add a weekly note
+        </button>
+        <div id="wn-area" class="hidden wn-box">
+          <textarea class="narea" id="weekly-note" rows="4" placeholder="Summarise your week - what went well, challenges, and plans for next week..."></textarea>
+          <div class="submit-row">
+            <button class="bsub" onclick="doSubmit('weekly')">Submit Note</button>
+          </div>
+        </div>
+        <div class="saved-notes" id="weekly-saved-notes"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TUT BOX -->
+<div id="tut">
+  <div class="tut-title" id="tut-title"></div>
+  <div class="tut-text"  id="tut-text"></div>
+  <div class="tut-foot">
+    <button class="tut-skip" onclick="endTour()">Skip tour</button>
+    <button class="tut-next" id="tut-next" onclick="tutNext()"></button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+
