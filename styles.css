@@ -712,10 +712,10 @@ body.dark .add-big:hover{ background: rgba(59,130,246,.25); }
 body.dark .chart-tab.active { background: #3b82f6; border-color: #3b82f6; }
 body.dark .chart-legend-item { color: #8b91a8; }
 
-/* Mobile card order: analytics → report → plan → note */
+/* Mobile card order: plan → analytics → report → note */
 @media (max-width:699px){
-  #analytics-card { order: 1; }
-  #report-card    { order: 2; }
-  #plan-card      { order: 3; }
+  #plan-card      { order: 1; }
+  #analytics-card { order: 2; }
+  #report-card    { order: 3; }
   #note-card      { order: 4; }
 }
