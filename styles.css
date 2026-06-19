@@ -77,7 +77,7 @@ textarea,input,button{font-family:'DM Sans',sans-serif}
 .d-lbl{font-size:11px;font-weight:600;color:var(--t3);text-align:right;margin-top:3px}
 
 
-.scroll{width:100%;max-width:430px;margin:0 auto;padding:14px 14px 64px}
+.scroll{width:100%;max-width:430px;margin:0 auto;padding:14px 14px 64px;display:flex;flex-direction:column}
 
 
 .card{
@@ -711,3 +711,11 @@ body.dark .add-big      { background: rgba(59,130,246,.15); border-color: rgba(5
 body.dark .add-big:hover{ background: rgba(59,130,246,.25); }
 body.dark .chart-tab.active { background: #3b82f6; border-color: #3b82f6; }
 body.dark .chart-legend-item { color: #8b91a8; }
+
+/* Mobile card order: analytics → report → plan → note */
+@media (max-width:699px){
+  #analytics-card { order: 1; }
+  #report-card    { order: 2; }
+  #plan-card      { order: 3; }
+  #note-card      { order: 4; }
+}
