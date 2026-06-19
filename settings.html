@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Aavahana — Account Settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="settings.css">
+</head>
+<body>
+
+<header class="s-hdr">
+  <button class="s-back" onclick="history.back()">
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <span class="s-title">Account Settings</span>
+  <div style="width:36px"></div>
+</header>
+
+<div class="s-scroll">
+
+  <!-- PROFILE CARD -->
+  <div class="s-card">
+    <div class="profile-row">
+      <div class="profile-avatar" id="profile-avatar">R</div>
+      <div>
+        <div class="profile-name" id="profile-name">Rajan</div>
+        <div class="profile-empid" id="profile-empid">EMP-00142</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHANGE NAME -->
+  <div class="s-card">
+    <div class="s-section-title">Change Name</div>
+    <div class="s-field-group">
+      <label class="s-label">Full Name</label>
+      <input class="s-input" id="new-name" type="text" placeholder="Enter new name">
+    </div>
+    <div id="name-msg" class="s-msg hidden"></div>
+    <button class="s-btn" onclick="changeName()">Update Name</button>
+  </div>
+
+  <!-- CHANGE PASSWORD -->
+  <div class="s-card">
+    <div class="s-section-title">Change Password</div>
+    <div class="s-field-group">
+      <label class="s-label">Current Password</label>
+      <input class="s-input" id="cur-pass" type="password" placeholder="Enter current password">
+    </div>
+    <div class="s-field-group">
+      <label class="s-label">New Password</label>
+      <input class="s-input" id="new-pass" type="password" placeholder="Enter new password">
+    </div>
+    <div class="s-field-group">
+      <label class="s-label">Confirm New Password</label>
+      <input class="s-input" id="new-pass2" type="password" placeholder="Repeat new password">
+    </div>
+    <div id="pass-msg" class="s-msg hidden"></div>
+    <button class="s-btn" onclick="changePassword()">Update Password</button>
+  </div>
+
+</div>
+
+<script src="settings.js"></script>
+</body>
+</html>

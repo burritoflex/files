@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Aavahana — Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+<!-- Dark toggle top-right -->
+<button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+  <i class="fa-solid fa-moon" id="theme-icon"></i>
+</button>
+
+<div class="login-wrap">
+
+  <div class="login-brand">
+    <span class="brand-logo">AAVAHANA</span>
+    <p class="brand-sub">Employee Performance Tracker</p>
+  </div>
+
+  <div class="login-card">
+    <div class="card-header">
+      <h1 class="card-title">Welcome back</h1>
+      <p class="card-hint">Log in to your account to continue</p>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Your Name</label>
+      <div class="field-wrap">
+        <i class="fa-solid fa-user field-icon"></i>
+        <input class="field-input" id="login-name" type="text" placeholder="e.g. Rajan Mehta" autocomplete="name">
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Employee ID</label>
+      <div class="field-wrap">
+        <i class="fa-solid fa-id-badge field-icon"></i>
+        <input class="field-input" id="login-empid" type="text" placeholder="e.g. EMP-00142" autocomplete="username">
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Password</label>
+      <div class="field-wrap">
+        <i class="fa-solid fa-lock field-icon"></i>
+        <input class="field-input" id="login-pass" type="password" placeholder="Enter your password" autocomplete="current-password">
+        <button class="toggle-pass" onclick="togglePass()" tabindex="-1" aria-label="Show password">
+          <i class="fa-regular fa-eye" id="pass-eye"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="login-err" class="form-err hidden"></div>
+
+    <button class="btn-primary" id="login-btn" onclick="doLogin()">
+      <span>Log In</span>
+      <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </div>
+
+  <p class="login-footer">© 2025 Aavahana · All rights reserved</p>
+</div>
+
+<script src="login.js"></script>
+</body>
+</html>

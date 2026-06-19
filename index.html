@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -19,10 +19,46 @@
 <div id="s-left"   class="scrim"></div>
 <div id="s-right"  class="scrim"></div>
 
+<!-- SETTINGS OVERLAY -->
+<div id="settings-overlay" class="settings-overlay hidden" onclick="closeSettings()"></div>
+
+<!-- SETTINGS POPUP -->
+<div id="settings-popup" class="settings-popup hidden">
+  <div class="sp-head">
+    <span class="sp-title">Settings</span>
+    <button class="sp-close" onclick="closeSettings()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="sp-user" id="sp-user">
+    <div class="sp-avatar"><i class="fa-solid fa-circle-user"></i></div>
+    <div>
+      <div class="sp-name" id="sp-name">Rajan</div>
+      <div class="sp-empid" id="sp-empid">EMP-00142</div>
+    </div>
+  </div>
+  <div class="sp-divider"></div>
+  <a class="sp-item" href="settings.html">
+    <i class="fa-solid fa-user-gear sp-item-icon"></i>
+    <span>Account Settings</span>
+    <i class="fa-solid fa-chevron-right sp-item-arrow"></i>
+  </a>
+  <div class="sp-item sp-item-toggle" onclick="toggleDark()">
+    <i class="fa-solid fa-moon sp-item-icon"></i>
+    <span>Dark Mode</span>
+    <div class="sp-toggle" id="dark-toggle"><div class="sp-toggle-knob"></div></div>
+  </div>
+  <div class="sp-divider"></div>
+  <button class="sp-item sp-logout" onclick="doLogout()">
+    <i class="fa-solid fa-arrow-right-from-bracket sp-item-icon"></i>
+    <span>Logout</span>
+  </button>
+</div>
+
 <!-- HEADER -->
 <header class="hdr">
   <span class="brand">AAVAHANA</span>
-  <div class="avatar"><i class="fa-regular fa-circle-user"></i></div>
+  <button class="settings-btn" onclick="openSettings()" aria-label="Settings">
+    <i class="fa-solid fa-bars"></i>
+  </button>
 </header>
 
 <!-- TOUR BANNER -->
@@ -41,7 +77,7 @@
 <div class="gbar">
   <div>
     <div class="g-label" id="g-label">Good morning,</div>
-    <div class="g-name">Rajan</div>
+    <div class="g-name" id="g-name">Rajan</div>
   </div>
   <div>
     <div class="d-num" id="d-num">12</div>
@@ -59,8 +95,6 @@
       <span class="cbadge hidden" id="task-badge"></span>
     </div>
     <div class="cb">
-
-      <!-- EMPTY -->
       <div id="v-empty">
         <div class="empty">
           <p class="empty-lbl">No plans yet - tap + to begin</p>
@@ -69,8 +103,6 @@
           </button>
         </div>
       </div>
-
-      <!-- SELECTION -->
       <div id="v-sel" class="hidden">
         <div class="sel-head">
           <p class="sel-lbl">Tasks from your supervisor</p>
@@ -83,17 +115,15 @@
             <div class="slbl">Slide to confirm plan</div>
             <button class="sthumb" id="sthumb"><i class="fa-solid fa-chevron-right"></i></button>
           </div>
+          <button class="confirm-btn" id="confirm-btn" onclick="confirmPlan()">Confirm</button>
         </div>
       </div>
-
-      <!-- ACTIVE -->
       <div id="v-active" class="hidden">
         <div id="active-list"></div>
         <button class="add-more" onclick="openSel()">
           <i class="fa-solid fa-plus" style="margin-right:6px"></i>Add more tasks
         </button>
       </div>
-
     </div>
   </div>
 
@@ -145,7 +175,7 @@
         <div class="wn-note-head">
           <span class="wn-title">Weekly Note <span class="wn-optional">optional</span></span>
         </div>
-        <p class="wn-hint">Here is an optional weekly note for adding context to the weekly report.</p>
+        <p class="wn-hint">An optional weekly note for adding context to the weekly report.</p>
         <button class="wn-add" id="wn-btn" onclick="showWeeklyNote()">
           <i class="fa-solid fa-plus-circle"></i> Add a weekly note
         </button>
@@ -175,4 +205,3 @@
 <script src="script.js"></script>
 </body>
 </html>
-
