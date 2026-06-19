@@ -19,6 +19,19 @@
 <div id="s-left"   class="scrim"></div>
 <div id="s-right"  class="scrim"></div>
 
+
+<!-- CONFIRM MODAL -->
+<div id="modal-overlay" class="modal-overlay hidden"></div>
+<div id="confirm-modal" class="confirm-modal hidden">
+  <div class="cm-icon" id="cm-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+  <div class="cm-title" id="cm-title">Are you sure?</div>
+  <div class="cm-body" id="cm-body"></div>
+  <div class="cm-btns">
+    <button class="cm-btn-cancel" id="cm-cancel" onclick="closeModal()">Cancel</button>
+    <button class="cm-btn-confirm" id="cm-confirm">Confirm</button>
+  </div>
+</div>
+
 <!-- SETTINGS OVERLAY -->
 <div id="settings-overlay" class="settings-overlay hidden" onclick="closeSettings()"></div>
 

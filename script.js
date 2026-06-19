@@ -113,8 +113,18 @@ function toggleDark(){
   renderAnalytics();
 }
 function doLogout(){
-  localStorage.removeItem('aavahana-user');
-  window.location.href='login.html';
+  closeSettings();
+  showModal({
+    title: 'Log out?',
+    body: 'You will be returned to the login screen. Your progress is saved.',
+    confirmText: 'Log Out',
+    danger: true,
+    icon: 'fa-arrow-right-from-bracket',
+    onConfirm: () => {
+      localStorage.removeItem('aavahana-user');
+      window.location.href='login.html';
+    }
+  });
 }
 
 // ─── BANNER ──────────────────────────────────────────
@@ -443,6 +453,24 @@ function doSubmit(type){
 }
 
 // ─── TOAST ───────────────────────────────────────────
+
+// ─── CONFIRM MODAL ───────────────────────────────────
+function showModal({ title, body, confirmText='Confirm', danger=false, icon='fa-triangle-exclamation', onConfirm }){
+  document.getElementById('cm-title').textContent   = title;
+  document.getElementById('cm-body').textContent    = body;
+  document.getElementById('cm-icon').innerHTML      = `<i class="fa-solid ${icon}"></i>`;
+  document.getElementById('cm-icon').className      = 'cm-icon' + (danger ? ' danger' : '');
+  const confirmBtn = document.getElementById('cm-confirm');
+  confirmBtn.textContent = confirmText;
+  confirmBtn.className   = 'cm-btn-confirm' + (danger ? ' danger' : '');
+  confirmBtn.onclick     = () => { closeModal(); onConfirm(); };
+  document.getElementById('confirm-modal').classList.remove('hidden');
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+function closeModal(){
+  document.getElementById('confirm-modal').classList.add('hidden');
+  document.getElementById('modal-overlay').classList.add('hidden');
+}
 function toast(msg){
   document.querySelectorAll('.toast').forEach(t=>t.remove());
   const t=document.createElement('div'); t.className='toast'; t.textContent=msg;
@@ -471,31 +499,40 @@ let _tourSnapshot = null;
 function startTour(){
   // If user has already done work, prompt and save state
   if(active.length > 0){
-    const ok = window.confirm(
-      "You've already started working. Starting the tour will temporarily reset your progress — your work will be restored when the tour ends. Continue?"
-    );
-    if(!ok) return;
-    // Snapshot current state
+    showModal({
+      title: 'Start guided tour?',
+      body: "You've already started working. The tour will temporarily reset your progress and restore it when finished.",
+      confirmText: 'Start Tour',
+      icon: 'fa-compass',
+      onConfirm: () => _launchTour(true)
+    });
+    return;
+  }
+
+  _launchTour(false);
+}
+
+function _launchTour(withSnapshot){
+  if(withSnapshot){
     _tourSnapshot = {
       active:   JSON.stringify(active),
       assigned: assigned,
       notes:    JSON.stringify(notes),
     };
-    // Reset to empty for tour
     active   = [];
     assigned = 0;
     notes    = { daily: [], weekly: [] };
   }
-
-  // Close any open panels before starting
+  // Close any open panels
   show('v-sel',    'hidden');
   show('v-active', 'hidden');
   show('v-slider', 'hidden');
   show('v-empty',  '');
   sel = [];
   document.getElementById('task-badge').classList.add('hidden');
-  document.getElementById('daily-note').value  = '';
-  document.getElementById('weekly-note') && (document.getElementById('weekly-note').value = '');
+  document.getElementById('daily-note').value = '';
+  const wn = document.getElementById('weekly-note');
+  if(wn) wn.value = '';
   document.getElementById('daily-saved-notes').innerHTML  = '';
   document.getElementById('weekly-saved-notes').innerHTML = '';
   document.getElementById('w-feed').innerHTML = '';
