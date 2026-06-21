@@ -271,15 +271,18 @@ body.dark #add-btn.tour-focus{
 }
 /* inline elements that need bg */
 #active-list.tour-focus{
-  border-radius:14px;padding:6px 10px;margin:-6px -10px;
+  border-radius:14px;padding:10px 14px;margin:-10px -14px;
   background:#fff;
+  box-shadow:0 0 0 3px rgba(61,55,204,.9), 0 12px 36px rgba(10,14,39,.15)!important;
 }
 body.dark #active-list.tour-focus{ background:#1e2430; }
+body.dark #analytics-card.tour-focus{ background:#1e2430!important; }
 #weekly-note-section.tour-focus{
   border-radius:14px;padding:14px;margin:-14px;
   background:#fff;
 }
 body.dark #weekly-note-section.tour-focus{ background:#1e2430; }
+body.dark #report-card.tour-focus{ background:#1e2430!important; }
 .tour-focus.sconf{ border-radius:30px; }
 
 

@@ -485,12 +485,13 @@ function show(id,action){
 
 // ─── TOUR ────────────────────────────────────────────
 const STEPS=[
-  {title:"Add today's tasks",   text:"Tap the + button to see tasks your supervisor has assigned. Pick which ones you'll work on today."},
-  {title:"Select and confirm",  text:"Tap one or more tasks you want to work on today. When happy with your selection, confirm your plan."},
-  {title:"Track your progress", text:"Tap a task's badge to update its status: Pending → Working → Done. Tap again to cycle back.", btnLabel:'Got it'},
-  {title:"Daily note",          text:"Write a short note each day — tasks completed, blockers, or observations. Submit a note to continue.", btnLabel:'Got it'},
-  {title:"Weekly report",       text:"This fills automatically from your completed tasks. Your completion rate and task list are tracked here.", btnLabel:'Got it'},
-  {title:"Weekly note",         text:"An optional weekly note for adding context to the weekly report. Submit one to finish, or skip.", btnLabel:'Finish tour'},
+  {title:"Add today's tasks",   text:"Tap the + button to see tasks assigned by your supervisor. Pick the ones you'll work on today."},
+  {title:"Select and confirm",  text:"Tap one or more tasks to select them. Then confirm your plan using the button below."},
+  {title:"Today's tasks",       text:"Your active tasks appear here. Tap the status badge to cycle through Pending → Working → Done.", btnLabel:'Got it'},
+  {title:"Analytics",           text:"Track your daily task completion as a bar chart. Switch to Weekly Trend to see your progress over the past 8 weeks — updates automatically as you complete tasks.", btnLabel:'Got it'},
+  {title:"Daily note",          text:"Write a short note each day — tasks completed, blockers, or anything worth remembering. Submit to save.", btnLabel:'Got it'},
+  {title:"Weekly report",       text:"This fills automatically from your completed tasks. Your completion rate and full task list are tracked here.", btnLabel:'Got it'},
+  {title:"Weekly note",         text:"An optional note to add context to your weekly report. Submit one to finish the tour, or skip.", btnLabel:'Finish tour'},
 ];
 const scrims={top:document.getElementById('s-top'),bot:document.getElementById('s-bot'),left:document.getElementById('s-left'),right:document.getElementById('s-right')};
 const tutEl=document.getElementById('tut');
@@ -552,18 +553,24 @@ function renderStep(){
   document.getElementById('tut-text').textContent=s.text;
   const next=document.getElementById('tut-next'); next.textContent=s.btnLabel||'Next';
   s.btnLabel?next.classList.remove('hidden'):next.classList.add('hidden');
-  const ids=['add-btn','plan-card','active-list','note-card','report-card','weekly-note-section'];
+  const ids=['add-btn','plan-card','active-list','analytics-card','note-card','report-card','weekly-note-section'];
   if(focusEl) focusEl.classList.remove('tour-focus');
   tgt=document.getElementById(ids[step-1]);
   // Never highlight the tut box itself
   if(tgt && tgt.id !== 'tut'){
     focusEl=tgt;
     focusEl.classList.add('tour-focus');
-    // For add-btn, also lift the parent card above the scrim
-    if(tgt.id === 'add-btn'){
-      const parentCard = document.getElementById('plan-card');
+    // Elements inside cards need their parent card lifted above the scrim
+    const cardParentMap = {
+      'add-btn':              'plan-card',
+      'active-list':          'plan-card',
+      'weekly-note-section':  'report-card',
+    };
+    const parentCardId = cardParentMap[tgt.id];
+    if(parentCardId){
+      const parentCard = document.getElementById(parentCardId);
       if(parentCard){
-        parentCard.style.zIndex = '2600';
+        parentCard.style.zIndex   = '2600';
         parentCard.style.position = 'relative';
         parentCard.style.backdropFilter = 'none';
         parentCard.style.webkitBackdropFilter = 'none';
@@ -571,9 +578,11 @@ function renderStep(){
         parentCard.style.background = document.body.classList.contains('dark') ? '#1e2430' : '#ffffff';
       }
     } else {
-      // Reset plan-card if we moved past step 1
-      const parentCard = document.getElementById('plan-card');
-      if(parentCard){ parentCard.style.cssText = ''; }
+      // Reset any previously lifted cards
+      ['plan-card','report-card'].forEach(id => {
+        const c = document.getElementById(id);
+        if(c) c.style.cssText = '';
+      });
     }
   } else {
     focusEl=null;
@@ -608,8 +617,10 @@ function endTour(){
   Object.values(scrims).forEach(s=>s.style.display='none');
   if(focusEl) focusEl.classList.remove('tour-focus'); focusEl=null; tutEl.style.display='none';
   // Reset any inline styles set during tour
-  const planCard = document.getElementById('plan-card');
-  if(planCard) planCard.style.cssText = '';
+  ['plan-card','report-card'].forEach(id => {
+    const c = document.getElementById(id);
+    if(c) c.style.cssText = '';
+  });
   // Restore pre-tour state if we snapshotted
   if(_tourSnapshot){
     active   = JSON.parse(_tourSnapshot.active);
